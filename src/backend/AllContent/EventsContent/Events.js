@@ -4,7 +4,7 @@ import { Create, Delete } from '@mui/icons-material';
 import apiUrls from '../../mockAPI';
 import '../EventsContent/Events.css';
 
-const SchoolSystem = () => {
+const Events = () => {
     const [intro, setIntro] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
     const [editPost, setEditPost] = useState(null);
@@ -25,10 +25,11 @@ const SchoolSystem = () => {
     const handleDelete = async (id) => {
         try {
             await axios.delete(`${apiUrls.otherContent}/${id}`);
-            setIntro(intro.filter(post => post.id !== id));
+            setIntro(intro.filter(post => post._id !== id));
             alert("Bài viết đã được xóa!");
         } catch (error) {
             console.error("Error deleting post: ", error);
+            alert("Lỗi khi xóa bài viết!");
         }
     };
 
@@ -44,13 +45,14 @@ const SchoolSystem = () => {
         }
 
         try {
-            await axios.put(`${apiUrls.otherContent}/${editPost.id}`, { content: editPost.content });
-            setIntro(intro.map(post => post.id === editPost.id ? { ...post, content: editPost.content } : post));
+            await axios.put(`${apiUrls.otherContent}/${editPost._id}`, { content: editPost.content });
+            setIntro(intro.map(post => post._id === editPost._id ? { ...post, content: editPost.content } : post));
             alert("Bài viết đã được cập nhật!");
             setIsEditing(false);
             setEditPost(null);
         } catch (error) {
             console.error("Error updating post: ", error);
+            alert("Lỗi khi cập nhật bài viết!");
         }
     };
 
@@ -72,7 +74,7 @@ const SchoolSystem = () => {
                 <>
                     <div className="postItem headerRow">
                         <div className="postColumn idColumn">ID</div>
-                        <div className="postColumn titleColumn">TIÊU ĐỀ</div> {/* Thêm cột tiêu đề */}
+                        <div className="postColumn titleColumn">TIÊU ĐỀ</div>
                         <div className="postColumn contentColumn1">HÌNH ẢNH</div>
                         <div className="postColumn contentColumn1">TÓM TẮT</div>
                         <div className="postColumn actionsColumn">CẬP NHẬT</div>
@@ -80,9 +82,9 @@ const SchoolSystem = () => {
     
                     {intro.length > 0 ? (
                         intro.map((post) => (
-                            <div key={post.id} className="postItem">
-                                <div className="postColumn idColumn">{post.id}</div>
-                                <div className="postColumn titleColumn">{post.title}</div> {/* Thêm dữ liệu cho tiêu đề */}
+                            <div key={post._id} className="postItem">
+                                <div className="postColumn idColumn">{post._id}</div>
+                                <div className="postColumn titleColumn">{post.title}</div>
                                 <div className="postColumn contentColumn1">
                                     <img src={post.image_url} alt="Post Image" style={{ maxWidth: "100px", height: "auto" }} />
                                 </div>
@@ -91,7 +93,7 @@ const SchoolSystem = () => {
                                     <button onClick={() => handleEdit(post)} className="editButton">
                                         <Create />
                                     </button>
-                                    <button onClick={() => handleDelete(post.id)} className="deleteButton">
+                                    <button onClick={() => handleDelete(post._id)} className="deleteButton">
                                         <Delete />
                                     </button>
                                 </div>
@@ -106,4 +108,4 @@ const SchoolSystem = () => {
     );
 };
 
-export default SchoolSystem;
+export default Events;

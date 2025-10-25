@@ -25,7 +25,7 @@ const IntroList = () => {
     const handleDelete = async (id) => {
         try {
             await axios.delete(`${apiUrls.introCentre}/${id}`);
-            setIntro(intro.filter(post => post.id !== id));
+            setIntro(intro.filter(post => post._id !== id));
             alert("Bài viết đã được xóa!");
         } catch (error) {
             console.error("Error deleting post: ", error);
@@ -44,8 +44,8 @@ const IntroList = () => {
         }
 
         try {
-            await axios.put(`${apiUrls.introCentre}/${editPost.id}`, { content: editPost.content });
-            setIntro(intro.map(post => post.id === editPost.id ? { ...post, content: editPost.content } : post));
+            await axios.put(`${apiUrls.introCentre}/${editPost._id}`, { content: editPost.content });
+            setIntro(intro.map(post => post._id === editPost._id ? { ...post, content: editPost.content } : post));
             alert("Bài viết đã được cập nhật!");
             setIsEditing(false);
             setEditPost(null);
@@ -77,14 +77,14 @@ const IntroList = () => {
                     </div>
                     {intro.length > 0 ? (
                         intro.map((post) => (
-                            <div key={post.id} className="postItem">
-                                <div className="postColumn idColumn">{post.id}</div>
+                            <div key={post._id} className="postItem">
+                                <div className="postColumn idColumn">{post._id}</div>
                                 <div className="postColumn contentColumn1">{post.content}</div>
                                 <div className="postColumn actionsColumn">
                                     <button onClick={() => handleEdit(post)} className="editButton">
                                         <Create />
                                     </button>
-                                    <button onClick={() => handleDelete(post.id)} className="deleteButton">
+                                    <button onClick={() => handleDelete(post._id)} className="deleteButton">
                                         <Delete />
                                     </button>
                                 </div>
