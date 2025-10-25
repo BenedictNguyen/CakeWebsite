@@ -1,16 +1,16 @@
-const apiUrls = {
-    faker_1: 'https://6764e88d52b2a7619f5dc86f.mockapi.io/Events',
-    chat: 'https://676cffa90e299dd2ddfe11f1.mockapi.io/message',
+const API_BASE_URL = 'http://localhost:5001/api';
 
-    // Các API gọi từ server chính
-    registerInfor: 'http://localhost:5000/api/RegisterForm',
-    schoolSystem: 'http://localhost:5000/api/posts',
-    introCentre: 'http://localhost:5000/api/introduce',
-    enlishPosts: 'http://localhost:5000/api/english',
-    otherContent: 'http://localhost:5000/api/event_centre',
-    faker_2: 'http://localhost:5000/api/studyabroad_info',
-    ielts_journey: 'http://localhost:5000/api/ielts_journey',
-    contactMessages: 'http://localhost:5000/api/ContactMessages'
+const apiUrls = {
+    posts: `${API_BASE_URL}/posts`,
+    enlishPosts: `${API_BASE_URL}/posts`,
+    introCentre: `${API_BASE_URL}/introduce`,
+    schoolSystem: `${API_BASE_URL}/schoolsystem`,
+    otherContent: `${API_BASE_URL}/events`,
+    faker_2: `${API_BASE_URL}/studyabroad`,
+    ielts_journey: `${API_BASE_URL}/ielts`,
+    audio: `${API_BASE_URL}/audio`,
+    registerInfor: `${API_BASE_URL}/register`,
+    contactMessages: `${API_BASE_URL}/contact`,
 };
 
 export default apiUrls;

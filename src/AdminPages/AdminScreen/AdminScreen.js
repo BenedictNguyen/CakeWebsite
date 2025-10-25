@@ -153,7 +153,7 @@ const AdminScreen = () => {
     // Events: Vui chơi, thể thao, 
     const handleEventSubmit = async (e) => {
         e.preventDefault();
-        if (!postData.title && !postData.content && !postData.description) {
+        if (!postData.title || !postData.content) {
             alert("Vui lòng điền đầy đủ thông tin!");
             return;
         }
@@ -161,6 +161,7 @@ const AdminScreen = () => {
             await axios.post(apiUrls.otherContent, postData);
             alert('Bài viết đã được đăng!');
             fetchPosts();
+            setPostData({ title: '', content: '', summary: '', image_url: '' });
         } catch (error) {
             console.error('Error posting data', error);
         }
@@ -169,7 +170,7 @@ const AdminScreen = () => {
     // Bài viết: Học bổng, chính sách
     const handleContentSubmit = async (e) => {
         e.preventDefault();
-        if (!postData.title && !postData.events) {
+        if (!postData.title || !postData.content) {
             alert("Vui lòng điền đầy đủ thông tin!");
             return;
         }
@@ -177,6 +178,7 @@ const AdminScreen = () => {
             await axios.post(apiUrls.faker_2, postData);
             alert('Bài viết đã được đăng!');
             fetchPosts();
+            setPostData({ title: '', content: '', summary: '', category: '', image_url: '' });
         } catch (error) {
             console.error('Error posting data', error);
         }
@@ -185,24 +187,24 @@ const AdminScreen = () => {
     // Bài viết: Thông tin du học như Hệ thống các trường du học
     const handleSchoolSystem = async (e) => {
         e.preventDefault();
-        if (!postData.title && !postData.events && !postData.description && !postData.category) {
+        if (!postData.title || !postData.content) {
             alert("Vui lòng điền đầy đủ thông tin!");
             return;
         }
         try {
-            // Gửi POST request tới API backend
             await axios.post(apiUrls.schoolSystem, postData);
             alert('Bài viết đã được đăng!');
             fetchPosts();
+            setPostData({ title: '', content: '', summary: '', category: '', image_url: '' });
         } catch (error) {
-            console.error('Error posting data to API backend', error);
+            console.error('Error posting data', error);
         }
     };
 
     // Bài viết về thông tin khai giảng khóa học, lịch học
     const handleIeltsJourney = async (e) => {
         e.preventDefault();
-        if (!postData.title && !postData.content && !postData.category) {
+        if (!postData.title || !postData.content) {
             alert("Vui lòng điền đầy đủ thông tin!");
             return;
         }
@@ -210,6 +212,7 @@ const AdminScreen = () => {
             await axios.post(apiUrls.ielts_journey, postData);
             alert('Bài viết đã được đăng!');
             fetchPosts();
+            setPostData({ title: '', content: '', summary: '', category: '', image_url: '' });
         } catch (error) {
             console.error('Error posting data', error);
         }
@@ -231,29 +234,31 @@ const AdminScreen = () => {
     // About Centre
     const handleSaveIntro = async (e) => {
         e.preventDefault();
+        if (!postData.content) {
+            alert("Vui lòng điền đầy đủ thông tin!");
+            return;
+        }
         try {
             await axios.post(apiUrls.introCentre, postData);
             alert('Bài viết đã được đăng!');
             fetchPosts();
+            setPostData({ content: '' });
         } catch (error) {
             console.error('Error posting data', error);
         }
     };
-    
+
     const handleNewEnglish = async (e) => {
         e.preventDefault();
-
-        // const formData = new FormData();
-    
-        if (!postData.title && !postData.content && !postData.summary && !postData.category) {
+        if (!postData.title || !postData.content) {
             alert("Vui lòng điền đầy đủ thông tin!");
             return;
         }
-
         try {
             await axios.post(apiUrls.enlishPosts, postData);
             alert('Bài viết đã được đăng!');
             fetchPosts();
+            setPostData({ title: '', content: '', summary: '', category: '', image_url: '', audioTestUrl: '', fileUrl: '' });
         } catch (error) {
             console.error('Error posting data', error);
         }

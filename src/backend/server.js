@@ -1,17 +1,14 @@
-// === IMPORT THƯ VIỆN ===
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-// === KHỞI TẠO APP ===
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
-// === MIDDLEWARE ===
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// === KẾT NỐI MONGODB ===
 mongoose.connect('mongodb://localhost:27017/cakewebsite', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -19,78 +16,95 @@ mongoose.connect('mongodb://localhost:27017/cakewebsite', {
 .then(() => console.log('✅ Kết nối MongoDB thành công!'))
 .catch((err) => console.error('❌ Lỗi kết nối MongoDB:', err));
 
-// === ĐỊNH NGHĨA SCHEMA ===
-
-// Bài viết (Posts)
 const postSchema = new mongoose.Schema({
   title: String,
   content: String,
   summary: String,
   category: String,
   image_url: String,
-  createdAt: { type: Date, default: Date.now }
+  audioTestUrl: String,
+  fileUrl: String,
+  created_at: { type: Date, default: Date.now }
 });
 const Post = mongoose.model('Post', postSchema);
 
-// Đăng ký form (Register)
 const registerSchema = new mongoose.Schema({
-  fullname: String,
-  email: String,
+  full_name: String,
+  gender: String,
+  birthDate: String,
+  birthPlace: String,
+  address: String,
   phone: String,
-  message: String,
-  createdAt: { type: Date, default: Date.now }
+  email: String,
+  facebook: String,
+  school: String,
+  course: String,
+  studyTime: String,
+  testDate: String,
+  startDate: String,
+  referral: String,
+  created_at: { type: Date, default: Date.now }
 });
 const RegisterForm = mongoose.model('RegisterForm', registerSchema);
 
-// Liên hệ (Contact)
 const contactSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  subject: String,
-  message: String,
-  createdAt: { type: Date, default: Date.now }
+  Name: String,
+  Phone: String,
+  Facebook: String,
+  Email: String,
+  Message: String,
+  CreatedAt: { type: Date, default: Date.now }
 });
 const ContactMessage = mongoose.model('ContactMessage', contactSchema);
 
-// Giới thiệu (Introduce)
 const introduceSchema = new mongoose.Schema({
-  title: String,
   content: String,
-  image_url: String,
+  created_at: { type: Date, default: Date.now }
 });
 const Introduce = mongoose.model('Introduce', introduceSchema);
 
-// Thông tin du học
-const abroadSchema = new mongoose.Schema({
-  country: String,
-  description: String,
+const schoolSystemSchema = new mongoose.Schema({
+  title: String,
+  content: String,
+  summary: String,
+  category: String,
   image_url: String,
+  created_at: { type: Date, default: Date.now }
 });
-const StudyAbroad = mongoose.model('StudyAbroad', abroadSchema);
+const SchoolSystem = mongoose.model('SchoolSystem', schoolSystemSchema);
 
-// Sự kiện
 const eventSchema = new mongoose.Schema({
   title: String,
   content: String,
+  summary: String,
   image_url: String,
-  event_date: String,
+  created_at: { type: Date, default: Date.now }
 });
 const Event = mongoose.model('Event', eventSchema);
 
-// Lộ trình IELTS
 const ieltsSchema = new mongoose.Schema({
-  level: String,
-  description: String,
+  title: String,
+  content: String,
+  summary: String,
+  category: String,
   image_url: String,
+  created_at: { type: Date, default: Date.now }
 });
 const IELTSJourney = mongoose.model('IELTSJourney', ieltsSchema);
 
-// === ROUTES API ===
+const studyAbroadSchema = new mongoose.Schema({
+  title: String,
+  content: String,
+  summary: String,
+  category: String,
+  image_url: String,
+  created_at: { type: Date, default: Date.now }
+});
+const StudyAbroad = mongoose.model('StudyAbroad', studyAbroadSchema);
 
-// --- POSTs ---
 app.get('/api/posts', async (req, res) => {
   try {
-    const posts = await Post.find().sort({ createdAt: -1 });
+    const posts = await Post.find().sort({ created_at: -1 });
     res.json(posts);
   } catch (err) {
     res.status(500).json({ message: 'Lỗi khi lấy danh sách bài viết!' });
@@ -125,7 +139,6 @@ app.delete('/api/posts/:id', async (req, res) => {
   }
 });
 
-// --- REGISTER FORM ---
 app.post('/api/register', async (req, res) => {
   try {
     const newReg = new RegisterForm(req.body);
@@ -138,14 +151,22 @@ app.post('/api/register', async (req, res) => {
 
 app.get('/api/register', async (req, res) => {
   try {
-    const regs = await RegisterForm.find().sort({ createdAt: -1 });
+    const regs = await RegisterForm.find().sort({ created_at: -1 });
     res.json(regs);
   } catch (err) {
     res.status(500).json({ message: 'Lỗi khi lấy danh sách đăng ký!' });
   }
 });
 
-// --- CONTACT MESSAGES ---
+app.delete('/api/register/:id', async (req, res) => {
+  try {
+    await RegisterForm.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Xóa thành công!' });
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi xóa!' });
+  }
+});
+
 app.post('/api/contact', async (req, res) => {
   try {
     const newMsg = new ContactMessage(req.body);
@@ -156,47 +177,164 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-// --- INTRODUCE ---
+app.get('/api/contact', async (req, res) => {
+  try {
+    const messages = await ContactMessage.find().sort({ CreatedAt: -1 });
+    res.json(messages);
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi lấy tin nhắn!' });
+  }
+});
+
+app.delete('/api/contact/:id', async (req, res) => {
+  try {
+    await ContactMessage.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Xóa thành công!' });
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi xóa!' });
+  }
+});
+
 app.get('/api/introduce', async (req, res) => {
   try {
-    const intro = await Introduce.find();
+    const intro = await Introduce.find().sort({ created_at: -1 });
     res.json(intro);
   } catch (err) {
     res.status(500).json({ message: 'Lỗi khi lấy thông tin giới thiệu!' });
   }
 });
 
-// --- STUDY ABROAD ---
-app.get('/api/studyabroad', async (req, res) => {
+app.post('/api/introduce', async (req, res) => {
   try {
-    const abroad = await StudyAbroad.find();
-    res.json(abroad);
+    const newIntro = new Introduce(req.body);
+    await newIntro.save();
+    res.status(201).json({ message: 'Thêm thành công!' });
   } catch (err) {
-    res.status(500).json({ message: 'Lỗi khi lấy thông tin du học!' });
+    res.status(500).json({ message: 'Lỗi khi thêm!' });
   }
 });
 
-// --- EVENTS ---
+app.delete('/api/introduce/:id', async (req, res) => {
+  try {
+    await Introduce.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Xóa thành công!' });
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi xóa!' });
+  }
+});
+
+app.get('/api/schoolsystem', async (req, res) => {
+  try {
+    const schools = await SchoolSystem.find().sort({ created_at: -1 });
+    res.json(schools);
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi lấy dữ liệu!' });
+  }
+});
+
+app.post('/api/schoolsystem', async (req, res) => {
+  try {
+    const newSchool = new SchoolSystem(req.body);
+    await newSchool.save();
+    res.status(201).json({ message: 'Thêm thành công!' });
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi thêm!' });
+  }
+});
+
+app.delete('/api/schoolsystem/:id', async (req, res) => {
+  try {
+    await SchoolSystem.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Xóa thành công!' });
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi xóa!' });
+  }
+});
+
 app.get('/api/events', async (req, res) => {
   try {
-    const events = await Event.find().sort({ event_date: -1 });
+    const events = await Event.find().sort({ created_at: -1 });
     res.json(events);
   } catch (err) {
     res.status(500).json({ message: 'Lỗi khi lấy sự kiện!' });
   }
 });
 
-// --- IELTS JOURNEY ---
+app.post('/api/events', async (req, res) => {
+  try {
+    const newEvent = new Event(req.body);
+    await newEvent.save();
+    res.status(201).json({ message: 'Thêm thành công!' });
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi thêm!' });
+  }
+});
+
+app.delete('/api/events/:id', async (req, res) => {
+  try {
+    await Event.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Xóa thành công!' });
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi xóa!' });
+  }
+});
+
 app.get('/api/ielts', async (req, res) => {
   try {
-    const journey = await IELTSJourney.find();
+    const journey = await IELTSJourney.find().sort({ created_at: -1 });
     res.json(journey);
   } catch (err) {
     res.status(500).json({ message: 'Lỗi khi lấy lộ trình IELTS!' });
   }
 });
 
-// === KHỞI ĐỘNG SERVER ===
+app.post('/api/ielts', async (req, res) => {
+  try {
+    const newJourney = new IELTSJourney(req.body);
+    await newJourney.save();
+    res.status(201).json({ message: 'Thêm thành công!' });
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi thêm!' });
+  }
+});
+
+app.delete('/api/ielts/:id', async (req, res) => {
+  try {
+    await IELTSJourney.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Xóa thành công!' });
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi xóa!' });
+  }
+});
+
+app.get('/api/studyabroad', async (req, res) => {
+  try {
+    const abroad = await StudyAbroad.find().sort({ created_at: -1 });
+    res.json(abroad);
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi lấy thông tin du học!' });
+  }
+});
+
+app.post('/api/studyabroad', async (req, res) => {
+  try {
+    const newAbroad = new StudyAbroad(req.body);
+    await newAbroad.save();
+    res.status(201).json({ message: 'Thêm thành công!' });
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi thêm!' });
+  }
+});
+
+app.delete('/api/studyabroad/:id', async (req, res) => {
+  try {
+    await StudyAbroad.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Xóa thành công!' });
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi xóa!' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`🚀 Server đang chạy tại http://localhost:${PORT}`);
 });
