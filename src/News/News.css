@@ -1,0 +1,141 @@
+.news-system-container {
+    font-family: Arial, sans-serif;
+}
+
+.news-menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 70px;
+    height: 70px;
+    padding-bottom: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.news-system-body {
+    width: 100%;
+    margin-top: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.news-body-title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+}
+
+.news-body-title1, .news-body-title2 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+}
+
+.news-body-title1 {
+    width: 60%;
+    padding-left: 12px;
+    color: #1016bc;
+    background: linear-gradient(to right, #fff, #1016bc);
+}
+
+.news-body-title2 {
+    width: 35%;
+    padding-left: 25px;
+    color: #ffe304;
+    background: linear-gradient(to right, #fff, #ffe304);
+}
+
+.content-column {
+    padding: 20px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.sidebar-column {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.news-title {
+    font-size: 20px;
+    text-align: left;
+}
+
+.news-image {
+    width: 80%;
+    height: auto;
+}
+
+.news-info {
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.information-list {
+    display: block;
+    gap: 20px;
+}
+
+.information-column {
+    width: 100%;
+    padding: 10px;
+    gap: 20px;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    transition: transform 0.3s ease;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.info-item:hover {
+    transform: scale(1.05);
+}
+
+.info-item img {
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+}
+
+.news-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.news-info h1 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.event-info h1 {
+    font-size: 15px;
+    margin: 0;
+}
+
+.news-info p {
+    margin: 5px 0 0;
+    font-size: 1rem;
+}
+
+.divider {
+    width: 100%;
+    border: 0;
+    border-top: 1px solid #ddd;
+}

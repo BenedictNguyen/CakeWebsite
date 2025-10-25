@@ -1,0 +1,255 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* ------------------------------------ 
+   Tổng thể container 
+------------------------------------ */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120000px;
+    overflow-x: hidden;
+}
+
+/* ------------------------------------ 
+   Body
+------------------------------------ */
+.mainContent {
+    margin-top: 30px;
+}
+
+.bodyContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    padding-top: 12px;
+}
+
+/* ------------------------------------ 
+   Slide banner
+------------------------------------ */
+.imageBanner {
+    position: relative;
+    overflow: hidden;
+}
+
+.bannerImage {
+    width: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;
+}
+
+.bannerText {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #ffe304;
+    z-index: 10;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+}
+
+.logo {
+    width: 250px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+.logo:hover {
+    transform: translateY(-10px);
+}
+
+.bannerText h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #ffe304;
+}
+
+.bannerButtons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+.bannerButton {
+    padding: 12px 25px;
+    background-color: #ffe304;
+    color: #000000;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    text-transform: uppercase;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.bannerButton:hover {
+    background-color: #f0f0f0;
+    color: #ffe304;
+}
+
+.banner1 h1 {
+    font-size: 40px;
+}
+
+.banner1 .bannerButton {
+    background-color: #1016bc;
+    color: yellow;
+}
+
+.banner2 h1 {
+    font-size: 32px;
+}
+
+.banner2 .bannerButton {
+    background-color: #1016bc;
+    color: yellow;
+}
+
+/* ------------------------------------ 
+   Introduce center
+------------------------------------ */
+.introContent {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.textContent, .visionColumn, .registrationInfo {
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Đồng bộ phông chữ và màu sắc */
+.textContent h2, .visionColumn h3, .registrationInfo h3 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #1016bc;
+}
+
+/* Cột Giới thiệu trung tâm */
+.textContent {
+    width: 30%;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+/* Cột Tầm nhìn */
+.visionColumn {
+    width: 30%;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+/* Cột Cách đăng ký */
+.registrationInfo {
+    width: 30%;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: #ffe304; 
+    color: #1016bc;
+}
+
+/* Hiệu ứng hover cho các cột */
+.textContent:hover, .visionColumn:hover, .registrationInfo:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ------------------------------------ 
+   Media Queries (For Responsiveness)
+------------------------------------ */
+@media (max-width: 1024px) {
+    .introContent {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .textContent, .visionColumn, .registrationInfo {
+        width: 100%;
+    }
+
+    .visionColumn {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .textContent h2 {
+        font-size: 24px;
+    }
+
+    .visionColumn h3 {
+        font-size: 22px;
+    }
+
+    .registrationInfo h3 {
+        font-size: 20px;
+    }
+
+    .contactButton {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
+
+/* ------------------------------------ 
+   Cải tiến giao diện button, logo và các yếu tố khác
+------------------------------------ */
+
+.contactButton {
+    background-color: #fff;
+    color: #f9a825;
+    padding: 12px 25px;
+    border: none;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    animation: blink 0.5s infinite;
+}
+
+.contactButton:hover {
+    background-color: #f57f17;
+    color: white;
+}
+
+@keyframes blink {
+    0% {
+        background-color: #ff0404;
+        color: #1016bc;
+    }
+    50% {
+        background-color: #f57f17;
+        color: white;
+    }
+    100% {
+        background-color: #ff0404;
+        color: #1016bc;
+    }
+}

@@ -1,0 +1,63 @@
+.contact-messages-postList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.contact-messages-postItem {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 2fr 2fr 3fr 2fr 100px;
+    gap: 10px;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+.contact-messages-headerRow {
+    font-weight: bold;
+    background-color: #f4f4f4;
+}
+
+.contact-messages-postColumn {
+    padding: 10px;
+    text-align: center;
+    overflow-wrap: break-word;
+}
+
+.contact-messages-idColumn, .contact-messages-titleColumn {
+    text-align: left;
+}
+
+.contact-messages-contentColumn1,
+.contact-messages-messageColumn,
+.contact-messages-dateColumn {
+    width: 100%;
+    text-align: left;
+}
+
+.contact-messages-postItem:hover {
+    background-color: transparent;
+}
+
+.contact-messages-actionsColumn {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+}
+
+.contact-messages-actionsColumn button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.contact-messages-actionsColumn button:hover {
+    transform: scale(1.1);
+    color: #007bff;
+}
